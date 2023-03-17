@@ -2,7 +2,9 @@ package seleniumconcepts;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -27,7 +29,15 @@ public class BrowserUtil {
 
 //			Using WebDrivermanger
 			WebDriverManager.chromedriver().setup();
-			driver = new ChromeDriver();
+			ChromeOptions options = new ChromeOptions();
+			options.addArguments("--remote-allow-origins=*"); 
+			
+			DesiredCapabilities capabilities = new DesiredCapabilities();
+
+			capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+
+			options.merge(capabilities);
+			driver = new ChromeDriver(options);
 
 		} else if (browser.equalsIgnoreCase("firefox")) {
 //			System.setProperty("webdriver.gecko.driver", "/Users/development/downloads/geckodriver");
