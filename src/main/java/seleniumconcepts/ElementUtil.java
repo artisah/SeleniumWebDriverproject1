@@ -6,6 +6,9 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+
+import io.opentelemetry.exporter.logging.SystemOutLogRecordExporter;
 
 public class ElementUtil {
 
@@ -113,6 +116,8 @@ public class ElementUtil {
 		List<WebElement> eleList = getElements(locator);
 		List<String> eleAttrList = new ArrayList();
 
+		System.out.println(eleList);
+
 		for (WebElement e : eleList) {
 			String attrVal = e.getAttribute(attributeValue);
 			if (!attrVal.isEmpty()) {
@@ -122,19 +127,24 @@ public class ElementUtil {
 		return eleAttrList;
 
 	}
-	
-	public void clickOnLink( By locator, String linkText) {
+
+	/**
+	 * This method will click on text of link
+	 * 
+	 * @param locator
+	 * @param linkText
+	 */
+	public void clickOnLink(By locator, String linkText) {
 		List<WebElement> langList = getElements(locator);
-		
+
 		for (WebElement e : langList) {
 			String text = e.getText();
-			
+
 			if (text.contains(linkText)) {
 				e.click();
 				break;
 			}
-			
-		
+
 		}
 	}
 
@@ -180,6 +190,60 @@ public class ElementUtil {
 		}
 
 		return locator;
+	}
+
+	// **********************DropDown************************88
+
+	public void doSelectDropDownByIndex(By locator, int index) {
+		Select select = new Select(getElement(locator));
+		select.selectByIndex(index);
+
+	}
+
+	public void doSelectDropDownByVisisbleText(By locator, String visisbleText) {
+		Select select = new Select(getElement(locator));
+		select.selectByVisibleText(visisbleText);
+
+	}
+
+	public void doSelectDropDownByValue(By locator, String value) {
+		Select select = new Select(getElement(locator));
+		select.selectByValue(value);
+
+	}
+
+	public int getDropDownOptionsCount(By locator) {
+		Select select = new Select(getElement(locator));
+		return select.getOptions().size();
+
+	}
+
+	public List<String> getDropDownOptionsList(By locator) {
+		Select select = new Select(getElement(locator));
+		List<String> optionsTextList = new ArrayList<String>();
+
+		List<WebElement> optionList = select.getOptions();
+
+		for (WebElement e : optionList) {
+			String text = e.getText();
+			optionsTextList.add(text);
+		}
+		return optionsTextList;
+
+	}
+
+	public void selectValueFromDropDown(By locator, String value) {
+		Select select = new Select(getElement(locator));
+		List<WebElement> optionList = select.getOptions();
+
+		for (WebElement e : optionList) {
+			String text = e.getText();
+
+			if (text.equals(value)) {
+				e.click();
+				break;
+			}
+		}
 	}
 
 }
