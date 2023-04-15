@@ -6,6 +6,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 import io.opentelemetry.exporter.logging.SystemOutLogRecordExporter;
@@ -244,6 +245,21 @@ public class ElementUtil {
 				break;
 			}
 		}
+	}
+	
+	
+	//*****************Actions Class Methods ***********************
+	
+	public void doActionsSendKeys(By locator, String value) {
+		Actions act = new Actions(driver);
+		act.sendKeys(getElement(locator), value).perform();
+		
+	}
+	
+	public void doActionsClicks(By locator) {
+		Actions act = new Actions(driver);
+		act.click(getElement(locator)).perform();
+		
 	}
 
 }
