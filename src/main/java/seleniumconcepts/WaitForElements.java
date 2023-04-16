@@ -51,6 +51,13 @@ public class WaitForElements {
 
 	}
 
+	/**
+	 * An expectation for checking that all elements present on the web page that match the locator are visible. Visibility means 
+	 * that the elements are not only displayed but also have a height and width that is greater than 0.
+	 * @param locator
+	 * @param timeOut
+	 * @return
+	 */
 	public static List<WebElement> waitForElementVisisble(By locator, int timeOut) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
 		return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));

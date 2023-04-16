@@ -324,6 +324,38 @@ public class ElementUtil {
 	//Method -3 - waitForframeByElement -- using ExpectedConditions.frameToBeAvaiableAndSwitchToIt(frameWebElement
 	
 	
+	//Single element
+	
+	
+	/**
+	 * An expectation for checking that an element is present on the DOM of a page and visible. 
+	 * Visibility means that the element is not only displayed but also has a height and width that is greater than 0.
+	 * Default Pooling time : 500ms
+	 * @param locator
+	 * @param timeOut
+	 * @return
+	 */
+	public  WebElement waitForElementVisisble(By locator, int timeOut) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
+		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+
+	}
+	
+	/**
+	 * An expectation for checking that an element is present on the DOM of a page and visible. 
+	 * Visibility means that the element is not only displayed but also has a height and width that is greater than 0.
+	 * Pooling time : value of "v" passed while calling function
+	 * @param locator
+	 * @param timeOut
+	 * @param poolingTime
+	 * @return
+	 */
+	public  WebElement waitForElementVisisbleByPoolingTime(By locator, int timeOut, int poolingTime) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut), Duration.ofSeconds(poolingTime));
+		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+
+	}
+	
 	//Multiple webelements present
 	
 	/**
