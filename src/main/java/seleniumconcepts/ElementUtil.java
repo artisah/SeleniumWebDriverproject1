@@ -1,13 +1,17 @@
 package seleniumconcepts;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.opentelemetry.exporter.logging.SystemOutLogRecordExporter;
 
@@ -246,20 +250,99 @@ public class ElementUtil {
 			}
 		}
 	}
-	
-	
-	//*****************Actions Class Methods ***********************
-	
+
+	// *****************Actions Class Methods ***********************
+
 	public void doActionsSendKeys(By locator, String value) {
 		Actions act = new Actions(driver);
 		act.sendKeys(getElement(locator), value).perform();
-		
+
 	}
-	
+
 	public void doActionsClicks(By locator) {
 		Actions act = new Actions(driver);
 		act.click(getElement(locator)).perform();
+
+	}
+
+	// ******************WeDriverWait method *****************
+	
+	
+	/**
+	 * An expectation for checking an element is visible and enabled such that you can click it.
+	 * @param locator
+	 * @param timeOut
+	 * @return
+	 */
+	public WebElement clickWhenReady( By locator, int timeOut) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
+		return wait.until(ExpectedConditions.elementToBeClickable(locator));
 		
+	}
+
+	public String waitForUrlContains(String urlFraction, int timeOut) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
+		if (wait.until(ExpectedConditions.urlContains(urlFraction))) {
+			return driver.getCurrentUrl();
+		} else {
+			return null;
+		}
+	}
+
+	public String waitForUrlToBe(String url, int timeOut) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
+		if (wait.until(ExpectedConditions.urlContains(url))) {
+			return driver.getCurrentUrl();
+		} else {
+			return null;
+		}
+	}
+	
+	// Alert with WebDriver wait
+	
+	public  Alert  waitForAlert(int timeOut) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
+        return  wait.until(ExpectedConditions.alertIsPresent()); // No need to write driver.switchTo().alert().
+	}
+	
+	public  String getAlertText(int timeOut) {
+		return waitForAlert(timeOut).getText();	
+	}
+	
+	public  void acceptAlert(int timeOut) {
+		waitForAlert(timeOut).accept();
+	}
+	
+	public  void dismissAlert(int timeOut) {
+		waitForAlert(timeOut).dismiss();
+	}
+	
+	// Write methods for frame with webdriverwait
+	
+	//Method -1 - waitForframeByIndex -- using ExpectedConditions.frameToBeAvaiableAndSwitchToIt(frameIndex)
+	//Method -2 - waitForframeByLocator -- using ExpectedConditions.frameToBeAvaiableAndSwitchToIt(frameLocator
+	//Method -3 - waitForframeByElement -- using ExpectedConditions.frameToBeAvaiableAndSwitchToIt(frameWebElement
+	
+	
+	//Multiple webelements present
+	
+	/**
+	 * An expectation for checking that all elements present on the web page that match the locator are visible. Visibility means 
+	 * that the elements are not only displayed but also have a height and width that is greater than 0.
+	 * @param locator
+	 * @param timeOut
+	 * @return
+	 */
+	public  List<WebElement> waitForElementsVisisble(By locator, int timeOut) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
+		return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+
+	}
+	
+	public  List<WebElement> waitForElementsPresence(By locator, int timeOut) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
+		return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+
 	}
 
 }
