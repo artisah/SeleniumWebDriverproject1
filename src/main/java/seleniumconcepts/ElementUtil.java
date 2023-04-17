@@ -279,6 +279,38 @@ public class ElementUtil {
 		return wait.until(ExpectedConditions.elementToBeClickable(locator));
 		
 	}
+	
+	// non web elements -- title, url, alert
+	
+	public boolean waitForPageTitle(String titleVal, int timeOut) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
+		return wait.until(ExpectedConditions.titleContains(titleVal));
+		
+	}
+	
+	public boolean waitForPageActualTitle(String titleVal, int timeOut) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
+		return wait.until(ExpectedConditions.titleIs(titleVal);
+		
+	}
+	
+	
+	public String doGetpageTitle( String titleVal, int timeOut ) {
+		if (waitForPageTitle(titleVal, timeOut)) {
+			return driver.getTitle();
+		}
+		return null;
+				
+	}
+	
+	public String doGetpageTitleIs( String titleVal, int timeOut ) {
+		if (waitForPageActualTitle(titleVal, timeOut)) {
+			return driver.getTitle();
+		}
+		return null;
+				
+	}
+	
 
 	public String waitForUrlContains(String urlFraction, int timeOut) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
@@ -325,6 +357,12 @@ public class ElementUtil {
 	
 	
 	//Single element
+	
+	public  WebElement waitForElementPresence(By locator, int timeOut) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
+		return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+
+	}
 	
 	
 	/**
