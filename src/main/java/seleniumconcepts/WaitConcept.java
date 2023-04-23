@@ -13,6 +13,13 @@ public class WaitConcept {
 		
 		//WebDriverwait(C) --> extends --> FluentWait(C) --> implements --> Wait(I) ---> has Abstract method --> until(Method)
 		//Fluentwait class implements Wait Abstract method from interface Wait.
+		
+		
+		//CAse
+		//Mix up implictly wait + explicitly wait together
+		// it will add up and will increse total waiting time
+		
+		//never use implictly wait in framework
 											
 	}
 

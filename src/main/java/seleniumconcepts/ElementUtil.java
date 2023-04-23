@@ -290,7 +290,7 @@ public class ElementUtil {
 	
 	public boolean waitForPageActualTitle(String titleVal, int timeOut) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
-		return wait.until(ExpectedConditions.titleIs(titleVal);
+		return wait.until(ExpectedConditions.titleIs(titleVal));
 		
 	}
 	

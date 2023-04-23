@@ -70,6 +70,8 @@ public class WaitForAlert {
 		waitForAlert(timeOut).dismiss();
 	}
 	
+	// Write method for waitforlementPresenceByFluentWait
+	
 	
 
 }
