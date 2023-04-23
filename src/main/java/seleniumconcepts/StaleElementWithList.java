@@ -45,21 +45,20 @@ public class StaleElementWithList {
 		
 		// set the zoom level to 80% 
 		JavascriptExecutor js = (JavascriptExecutor) driver; 
-		js.executeScript("document.body.style.zoom='80%'");
+		//js.executeScript("document.body.style.zoom='80%'");
 		
-    	List<WebElement>  footerList = driver.findElements(By.xpath("(//ul[@class='list-unstyled'])[8]//a"));
+		By footers = By.xpath("(//ul[@class='list-unstyled'])[8]//a");
 		
-		//List<WebElement>  rightSideList = driver.findElements(By.xpath("div[@id='account-login']//div[@class='list-group mb-3']//a"));
-			
-			
-		for(WebElement e : footerList) {
-			js.executeScript("arguments[0].click();", e);
-			Thread.sleep(1000);
-			driver.navigate().back();
-			footerList = driver.findElements(By.xpath("(//ul[@class='list-unstyled'])[8]//a"));
-		
-			
-		}
+    	List<WebElement>  footerList = driver.findElements(footers);
+    	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+    	
+    	
+    	for (int i = 0; i < footerList.size(); i++) {
+    		List<WebElement> footerListNew = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(footers));
+    		js.executeScript("arguments[0].click();", footerListNew.get(i));
+    		Thread.sleep(2000);
+    		driver.navigate().back();  		
+    	}
 
 	}
 
